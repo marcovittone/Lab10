@@ -57,5 +57,10 @@ public class Model {
 		return this.fiumiMap.get(r.getId()).getFlowAvg();
 	}
 	
+	public List<Flow> getMisurazioniDatoFiume(River r){
+		return this.fiumiMap.get(r.getId()).getFlows();
+		
+	}
+	
 	
 }

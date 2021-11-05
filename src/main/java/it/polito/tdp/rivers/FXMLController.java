@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.rivers.model.Model;
 import it.polito.tdp.rivers.model.River;
+import it.polito.tdp.rivers.model.Simulator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -72,6 +73,46 @@ public class FXMLController {
 
     @FXML
     void handleSimula(ActionEvent event) {
+    	
+    	this.txtResult.clear();
+    	
+    	River r = this.boxRiver.getValue();
+    	
+    	if(r== null)
+    	{
+    		this.txtK.clear();
+    		this.txtResult.setText("errore devi prima selezionare il fiume dal menu a tendina");
+			return;
+    	}
+    	
+    	String s = this.txtK.getText();
+    	double k;
+    	
+    	try {
+    		k=Double.parseDouble(s);
+			
+		} catch (NumberFormatException e) {
+			
+			this.txtResult.setText("errore devi inserire un numero");
+			this.txtK.clear();
+			return;
+		}
+    	
+    	if(k<=0)
+    		{
+    			this.txtResult.setText("errore devi inserire un numero maggiore di zero");
+    			this.txtK.clear();
+    			return;
+    		}
+    	
+    	double mediaGiornaliera = this.m.getMediaMisurazioni(r)*60*60*24;
+    	double Q = k*mediaGiornaliera*(30);
+    	
+    	Simulator simulator = new Simulator();
+    	simulator.run(Q, r, mediaGiornaliera);
+    	
+    	this.txtResult.appendText("LIVELLO DI ACQUA MEDIO :"+simulator.getCMedio()+" m^3/giorno");
+    	this.txtResult.appendText("\nCON INSUFFICIENZE REGISTRATE IN "+simulator.getGiorniInsufficienti()+" GIORNI");
 
     }
 
