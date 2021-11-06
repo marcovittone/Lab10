@@ -72,7 +72,7 @@ public class Simulator {
 		if(fiume.getFlows().size()==0)
 			return null;
 		
-		return this.mean(CMedio);
+		return this.mean2(CMedio);
 	}
 	
 	private double mean(List<Double> lista) {
@@ -85,6 +85,15 @@ public class Simulator {
 		  }
 		  return avg;
 		}
+	
+	private double mean2(List<Double> list) {
+		
+		double tot=0;
+		for(Double d:list)
+			tot+=d/list.size();
+		return tot;
+			
+	}
 	
 
 }
